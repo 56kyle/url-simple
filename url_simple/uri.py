@@ -16,6 +16,7 @@ class URI(mixins.ValueStringValidatable):
     fragment: components.Fragment
 
     def __init__(self, value: str):
+        super().__init__(value)
         self.scheme = components.Scheme(value)
         self.authority = components.Authority(value)
         self.path = components.Path(value)

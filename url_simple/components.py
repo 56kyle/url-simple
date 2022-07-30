@@ -31,29 +31,49 @@ class URIComponent(mixins.ValueStringValidatable, mixins.ValueStringFindable):
 
 
 class Scheme(URIComponent):
-    prefix: str = ':'
-    value_regex: re.Pattern = re.compile(r'[a-zA-Z][a-zA-Z\d+.-]')
-    validation_regex: re.Pattern = re.compile(rf'^{value_regex.pattern}*$')
+    suffix: str = ':'
+    value_regex: re.Pattern = re.compile(r'[a-zA-Z][a-zA-Z\d+.-]+')
+    validation_regex: re.Pattern = re.compile(rf'^{value_regex.pattern}$')
+    find_regex: re.Pattern = re.compile(rf'^(?P<scheme>{value_regex}):.+$')
     validation_error = InvalidSchemeError
-    find_regex: re.Pattern = re.compile(rf'^(?P<scheme>{value_regex}*):.+$')
+
 
 class UserInfo(URIComponent):
-    validation_regex: re.Pattern = re.compile(r'^')
+    suffix: str = '@'
+    username_regex: re.Pattern = re.compile(r'[a-zA-Z\d+.-]+')
+    password_regex: re.Pattern = re.compile(r':[a-zA-Z\d+.-]*')
+    value_regex: re.Pattern = re.compile(rf'{username_regex.pattern}(?:{password_regex.pattern})?')
+    validation_regex: re.Pattern = re.compile(rf'^{value_regex.pattern}@$')
+    find_regex: re.Pattern = re.compile(rf'^(?P<user_info>{value_regex.pattern})@.*$')
     validation_error = InvalidUserInfoError
-    find_regex: re.Pattern = re.compile(r'^(?P<userinfo>.+?)@.+$')
+
 
 class Host(URIComponent):
-    allowed_characters_regex_portion: str = r'[a-zA-Z\d\-.]'
-    validation_regex: re.Pattern = re.compile(rf'^{allowed_characters_regex_portion}{{1,253}}$')
+    label_regex: re.Pattern = re.compile(r'[a-zA-Z\d-]{1,63}')
+    label_with_joining_dot_regex: re.Pattern = re.compile(rf'\.{label_regex.pattern}')
+    hostname_regex: re.Pattern = re.compile(rf'{label_regex.pattern}(?:{label_with_joining_dot_regex.pattern}){{0,3}}')
+
+    ipv4_regex: re.Pattern = re.compile(r'(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')
+
+    hex_regex: re.Pattern = re.compile(r'[0-9a-fA-F]')
+    ipv6_regex: re.Pattern = re.compile(rf'(?:\[{hex_regex.pattern}{{1,4}}(?::{hex_regex.pattern}{{1,4}}){7})\])')
+
+    value_regex: re.Pattern = re.compile(rf'(?:(?:{hostname_regex.pattern})|(?:{ipv4_regex.pattern})|(?:{ipv6_regex.pattern}))')
+    validation_regex: re.Pattern = re.compile(rf'^{value_regex.pattern}$')
+    find_regex: re.Pattern = re.compile(rf'(?:.*@)?(?P<host>{value_regex.pattern})(?::\d+)?')
     validation_error = InvalidHostError
-    find_regex: re.Pattern = re.compile(rf'^(?:.+@)?(?P<host>{allowed_characters_regex_portion}{{1,253}})(?::.+)?$')
+
 
 class Port(URIComponent):
-    validation_regex: re.Pattern = re.compile(r'')
+    prefix = ':'
+    value_regex: re.Pattern = re.compile(r'\d{1,5}')
+    validation_regex: re.Pattern = re.compile(rf'{value_regex.pattern}$')
+    find_regex: re.Pattern = re.compile(rf'.*{prefix}(?P<port>{value_regex.pattern})')
     validation_error = InvalidPortError
-    find_regex: re.Pattern = re.compile(r'^.+:(?P<port>\d+)$')
+
 
 class Authority(URIComponent):
+    value_regex: re.Pattern = re.compile(r'')
     validation_regex: re.Pattern = re.compile(r'')
     validation_error = InvalidAuthorityError
 
