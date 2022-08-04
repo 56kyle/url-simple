@@ -3,7 +3,6 @@
 class ValidationError(ValueError):
     pass
 
-
 class InvalidURIError(ValidationError):
     pass
 
@@ -24,9 +23,23 @@ class InvalidAuthorityError(ValidationError):
 class InvalidUserInfoError(InvalidAuthorityError):
     pass
 
+class InvalidUsernameError(InvalidUserInfoError):
+    pass
+
+class InvalidPasswordError(InvalidUserInfoError):
+    pass
+
 class InvalidHostError(InvalidAuthorityError):
     pass
 
+class InvalidHostnameError(InvalidHostError):
+    pass
+
+class InvalidIPV4Error(InvalidHostError):
+    pass
+
+class InvalidIPV6Error(InvalidHostError):
+    pass
 class InvalidPortError(InvalidAuthorityError):
     pass
 

@@ -1,7 +1,7 @@
 
-from uri import URI
-from url import URL
-from urn import URN
+from .uri import URI
+from .url import URL
+from .urn import URN
 
 
 __all__ = [
