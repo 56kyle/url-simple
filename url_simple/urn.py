@@ -1,8 +1,11 @@
 
 
+import re
+
 
 class URN:
-    pass
+    """A Universal Resource Name"""
+    validation_regex = re.compile(r'')
 
 
 
