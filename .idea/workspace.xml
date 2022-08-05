@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8930a39b-6f30-4263-9d92-abaec795b81c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.coverage" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/conftest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_constants.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/url_simple/constants.py" afterDir="false" />
+    <list default="true" id="8930a39b-6f30-4263-9d92-abaec795b81c" name="Changes" comment="adds more regex to components">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_mixins.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_mixins.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/url_simple/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/url_simple/components.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/components.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/url_simple/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/exceptions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/url_simple/mixins.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/mixins.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/url_simple/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/constants.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +204,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="Adds test files" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/url_simple$constants.coverage" NAME="constants Coverage Results" MODIFIED="1659646653251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/url_simple" />
     <SUITE FILE_PATH="coverage/url_simple$.coverage" NAME=" Coverage Results" MODIFIED="1659632405352" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/url_simple$constants.coverage" NAME="constants Coverage Results" MODIFIED="1659646653251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/url_simple" />
   </component>
 </project>

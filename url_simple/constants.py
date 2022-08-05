@@ -2,48 +2,101 @@
 import re
 from typing import Type
 
-class Bases:
-    b: Type[bin] = bin
-    d: Type[float] = float
-    x: Type[hex] = hex
-
 
 ALPHA: re.Pattern = re.compile(r'[a-zA-Z]')
-BIT: re.Pattern = re.compile(r'')
+BIT: re.Pattern = re.compile(r'[0-1]')
 CHAR: re.Pattern = re.compile(r'[\u0000-\u007F]')
 CR: re.Pattern = re.compile(r'\x0D')
-CRLF: re.Pattern = re.compile(r'\x0D\x0A')
-CTL: re.Pattern = re.compile(r'')
-DIGIT: re.Pattern = re.compile(r'')
-DQUOTE: re.Pattern = re.compile(r'')
-HEXDIG: re.Pattern = re.compile(r'')
-HTAB: re.Pattern = re.compile(r'')
+CTL: re.Pattern = re.compile(r'[\x00-\x1F]|\x7F')
+DIGIT: re.Pattern = re.compile(r'[0-9]')
+DQUOTE: re.Pattern = re.compile(r'\x22')
+HEXDIG: re.Pattern = re.compile(r'[0-9A-Fa-f]')
+HTAB: re.Pattern = re.compile(r'\x09')
 LF: re.Pattern = re.compile(r'\x0A')
-LWSP: re.Pattern = re.compile(r'')
+CRLF: re.Pattern = re.compile(rf'{CR}{LF}')
 OCTET: re.Pattern = re.compile(r'[\x00-\xFF]')
 SP: re.Pattern = re.compile(r'\x20')
+VCHAR: re.Pattern = re.compile(r'[\u0021-\u007E]')
+WSP: re.Pattern = re.compile(rf'{SP}|{HTAB}')
+LWSP: re.Pattern = re.compile(rf'(?:{CRLF}?{WSP})*')
 
 
-CR = '0x0D' # carriage return
+''''''
+    URI           = re.compile(rf'{scheme}:{hier-part}(?:?{query})?(?:#{fragment})?')
 
-CRLF = 'R LF' # Internet standard newline
+    hier-part     = re.compile(rf'//{authority}(?:path-abempty | path-absolute | path-rootless | path-empty)')
 
-CTL = '0x00-1F / 0x7F' # controls
+    URI-reference = re.compile(rf'{URI}|{relative-ref}')
 
-DIGIT = '0x30-39' # 0-9
+    absolute-URI  = re.compile(rf'{scheme}:{hier-part}(?:?{query})?')
 
-DQUOTE = '0x22' # " (Double Quote)
+    relative-ref  = re.compile(rf'{relative-part}(?:?{query})?(?:#{fragment})?')
 
-HEXDIG = 'IGIT / "A" / "B" / "C" / "D" / "E" / "F"'
+    relative-part = re.compile(rf'//{authority}(?:{path-abempty}|{path-absolute}|{path-noscheme}|{path-empty})')
 
-HTAB = '0x09' # horizontal tab
+    scheme        = re.compile(rf'{ALPHA}(?:{ALPHA}|{DIGIT}|[+-.])*')
 
-LF = '0x0A' # linefeed
+    authority     = re.compile(rf'(?:{userinfo}@)?{host}(?::{port})?')
+    userinfo      = re.compile(rf'(?:{unreserved}|{pct-encoded}|{sub-delims}|:)*')
+    host          = re.compile(rf'{IP-literal}|{IPv4address}|{reg-name}')
+    port          = re.compile(rf'{DIGIT}*')
 
-LWSP = '*(WSP / CRLF WSP)' # linear white space (past newline)
+    IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
 
-OCTET = '0x00-FF' # 8 bits of data
-SP = '0x20'
+    IPvFuture     = "v" 1*HEXDIG "." 1*( unreserved / sub-delims / ":" )
+
+    IPv6address   =                            6( h16 ":" ) ls32
+                 /                       "::" 5( h16 ":" ) ls32
+                 / [               h16 ] "::" 4( h16 ":" ) ls32
+                 / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+                 / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+                 / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
+                 / [ *4( h16 ":" ) h16 ] "::"              ls32
+                 / [ *5( h16 ":" ) h16 ] "::"              h16
+                 / [ *6( h16 ":" ) h16 ] "::"
+
+    h16           = 1*4HEXDIG
+    ls32          = ( h16 ":" h16 ) / IPv4address
+    IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+    dec-octet     = DIGIT                 ; 0-9
+                 / %x31-39 DIGIT         ; 10-99
+                 / "1" 2DIGIT            ; 100-199
+                 / "2" %x30-34 DIGIT     ; 200-249
+                 / "25" %x30-35          ; 250-255
+
+    reg-name      = *( unreserved / pct-encoded / sub-delims )
+
+    path          = path-abempty    ; begins with "/" or is empty
+                 / path-absolute   ; begins with "/" but not "//"
+                 / path-noscheme   ; begins with a non-colon segment
+                 / path-rootless   ; begins with a segment
+                 / path-empty      ; zero characters
+
+    path-abempty  = *( "/" segment )
+    path-absolute = "/" [ segment-nz *( "/" segment ) ]
+    path-noscheme = segment-nz-nc *( "/" segment )
+    path-rootless = segment-nz *( "/" segment )
+    path-empty    = 0<pchar>
+
+    segment       = *pchar
+    segment-nz    = 1*pchar
+    segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
+                 ; non-zero-length segment without any colon ":"
+
+    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+
+    query         = *( pchar / "/" / "?" )
+
+    fragment      = *( pchar / "/" / "?" )
+
+    pct-encoded   = "%" HEXDIG HEXDIG
+
+    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+    reserved      = gen-delims / sub-delims
+    gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
+    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+                 / "*" / "+" / "," / ";" / "="
+''''''
 
 hex_digit: re.Pattern = re.compile(r'[0-9a-fA-F]')
 percent_encoded_char: re.Pattern = re.compile(rf'%{hex_digit.pattern}{{2}}')
