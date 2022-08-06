@@ -6,7 +6,7 @@ from typing import List, AnyStr
 
 from url_simple.constants import (
     hex_digit,
-    percent_encoded_char,
+    pct_encoded,
     gen_delims,
     sub_delims,
     reserved,
@@ -36,9 +36,6 @@ from url_simple.mixins import (
 class URIComponent(ValueStringValidatable):
     prefix: str = ''
     suffix: str = ''
-    value_regex: re.Pattern = None
-    validation_regex: re.Pattern = None
-    validation_error: ValidationError = ValidationError
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -60,34 +57,12 @@ class URIComponent(ValueStringValidatable):
 class Scheme(URIComponent):
     suffix: str = ':'
     value_regex: re.Pattern = re.compile(r'(?P<scheme>[a-zA-Z][a-zA-Z\d+.-]+)')
-    validation_regex: re.Pattern = re.compile(rf'^{value_regex.pattern}$')
     validation_error = InvalidSchemeError
-
-class Username(URIComponent):
-    value_regex: re.Pattern = re.compile(r'[a-zA-Z\d+.-]+')
-    validation_regex: re.Pattern = re.compile(rf'^{value_regex.pattern}$')
-    validation_error = InvalidUsernameError
-
-class Password(URIComponent):
-    prefix: str = ':'
-    value_regex: re.Pattern = re.compile(r'(?P<password>[a-zA-Z\d+.-]+)')
-    validation_error = InvalidPasswordError
 
 class UserInfo(URIComponent):
     suffix: str = '@'
-    value_regex: re.Pattern = re.compile(rf'(?P<user_info>{Username.as_pattern()}{Password.as_pattern()}?)')
+    value_regex: re.Pattern = re.compile(rf'(?P<user_info>(?:{unreserved}|{pct_encoded}|{sub_delims}|:)*)')
     validation_error = InvalidUserInfoError
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.username = None
-        self.password = None
-
-    def _get_components(self, match: re.Match):
-        match = self.value_regex.fullmatch(self.value)
-        self.username = Username(value=match.group('username'))
-        self.password = Password(value=match.group('password'))
-
 
 class Hostname(URIComponent):
     label_regex: re.Pattern = re.compile(r'[a-zA-Z\d-]{1,63}')
@@ -102,8 +77,8 @@ class IPV4(URIComponent):
     validation_error = InvalidIPV4Error
 
 class IPV6(URIComponent):
-    prefix = '['
-    suffix = ']'
+    prefix: str = '['
+    suffix: str = ']'
     value_regex: re.Pattern = re.compile(rf'(?P<ipv6>{hex_digit.pattern}{{1,4}}(?::{hex_digit.pattern}{{1,4}}){7})')
     validation_error = InvalidIPV6Error
 
@@ -117,16 +92,14 @@ class Host(URIComponent):
         self.ipv6: IPV6 | None = IPV6(value=match.group('ipv6'))
 
 class Port(URIComponent):
-    prefix = ':'
+    prefix: str = ':'
     value_regex: re.Pattern = re.compile(r'(?P<port>\d{1,5})')
     validation_error = InvalidPortError
 
 class Authority(URIComponent):
-    value_regex = re.compile(r'^//{}{}{}')
+    prefix: str = '//'
+    value_regex = re.compile(rf'(?P<authority>{UserInfo.as_pattern()}?{Host.as_pattern()}{Port.as_pattern()}?)')
     validation_error = InvalidAuthorityError
-
-    def __init__(self, value: str):
-        super().__init__(value)
 
     def _get_components(self, match: re.Match):
         self.user_info: UserInfo | None = UserInfo(value=match.group('user_info'))

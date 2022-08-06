@@ -35,11 +35,12 @@ class ValueValidatable(ABC, ValueDependent):
 
 
 class ValueStringValidatable(ValueValidatable, ValueStringDependent):
-    value_regex: re.Pattern = re.compile('')
+    value_regex: re.Pattern = re.compile(r'')
+    validation_error = exceptions.ValidationError
 
     def _validate(self, match: re.Match = None) -> None:
         if match is None:
-            raise self.validation_error()
+            raise self.validation_error(f'Invalid value for {self.__class__.__name__}: {self.value}')
 
     def _get_fullmatch(self) -> re.Match | None:
         return self.value_regex.fullmatch(self.value)

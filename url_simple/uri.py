@@ -8,23 +8,14 @@ from abc import ABC, abstractmethod
 from typing import List, NamedTuple
 
 
-class URI(mixins.ValueStringValidatable):
-    scheme: components.Scheme
-    authority: components.Authority
-    path: components.Path
-    query: components.Query
-    fragment: components.Fragment
+class URI(components.URIComponent):
+    value_regex: re.Pattern = re.compile(rf'{components.Scheme.as_pattern()}')
+    validation_error = exceptions.InvalidURIError
 
-    def __init__(self, value: str):
-        self.scheme = components.Scheme(value)
-        self.authority = components.Authority(value)
-        self.path = components.Path(value)
-        self.query = components.Query(value)
-        self.fragment = components.Fragment(value)
-        self.components = [
-            self.scheme,
-            self.authority,
-            self.path,
-            self.query,
-            self.fragment,
-        ]
+    def _get_components(self, match: re.Match):
+        self.scheme = components.Scheme(match.group('scheme'))
+        self.authority = components.Authority(match.group('authority'))
+        self.path = components.Path(match.group('path'))
+        self.query = components.Query(match.group('query'))
+        self.fragment = components.Fragment(match.group('fragment'))
+
