@@ -29,8 +29,9 @@ class ValueStringDependent(ValueDependent[str]):
 class ValueValidatable(ABC, ValueDependent):
     validation_error: Type[exceptions.ValidationError] = exceptions.ValidationError
 
+    @classmethod
     @abstractmethod
-    def _validate(self, *args, **kwargs):
+    def validate(cls, *args, **kwargs):
         pass
 
 
@@ -38,10 +39,17 @@ class ValueStringValidatable(ValueValidatable, ValueStringDependent):
     value_regex: re.Pattern = re.compile(r'')
     validation_error = exceptions.ValidationError
 
-    def _validate(self, match: re.Match = None) -> None:
-        if match is None:
-            raise self.validation_error(f'Invalid value for {self.__class__.__name__}: {self.value}')
+    @classmethod
+    def validate(cls, value: str) -> None:
+        match = cls._get_fullmatch(value)
+        cls._validate_against_match(value, match)
 
-    def _get_fullmatch(self) -> re.Match | None:
-        return self.value_regex.fullmatch(self.value)
+    @classmethod
+    def _validate_against_match(cls, value: str, match: re.Match | None):
+        if match is None:
+            raise cls.validation_error(f'Invalid value for {cls.__name__}: {value}')
+
+    @classmethod
+    def _get_fullmatch(cls, value: str) -> re.Match | None:
+        return cls.value_regex.fullmatch(value)
 

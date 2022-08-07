@@ -48,9 +48,9 @@ class URIComponent(ValueStringValidatable):
         return f'{cls.prefix}{cls.value_regex.pattern}{cls.suffix}'
 
     def parse(self):
-        match: re.Match | None = self._get_fullmatch()
+        match: re.Match | None = self._get_fullmatch(self.value)
         self._get_components(match)
-        self._validate(match)
+        self._validate_against_match(self.value, match)
 
     def _get_components(self, match: re.Match):
         pass
@@ -121,12 +121,16 @@ class Path(URIComponent):
     segment: re.Pattern = re.compile(rf'{pchar}*')
     segment_nz: re.Pattern = re.compile(rf'{pchar}+')
     segment_nz_nc: re.Pattern = re.compile(rf'(?:{unreserved}|{pct_encoded}|{sub_delims}|@)+')
+    pchar = re.compile(r'.*')
+    segment = re.compile(r'.*')
+    segment_nz = re.compile(r'.*')
+    segment_nz_nc = re.compile(r'.*')
 
-    abempty: re.Pattern = re.compile(rf'(/{segment})*')
-    absolute: re.Pattern = re.compile(rf'/(?:{segment_nz}(?:/{segment})*)?')
-    noscheme: re.Pattern = re.compile(rf'{segment_nz_nc}(?:/{segment})*')
-    rootless: re.Pattern = re.compile(rf'{segment_nz}(?:/{segment})*')
-    empty: re.Pattern = re.compile(r'^$')
+    abempty: re.Pattern = re.compile(rf'(?P<abempty>(/{segment})*)')
+    absolute: re.Pattern = re.compile(rf'(?P<absolute>/(?:{segment_nz}(?:/{segment})*)?)')
+    noscheme: re.Pattern = re.compile(rf'(?P<noscheme>{segment_nz_nc}(?:/{segment})*)')
+    rootless: re.Pattern = re.compile(rf'(?P<rootless>{segment_nz}(?:/{segment})*)')
+    empty: re.Pattern = re.compile(r'(?P<empty>^$)')
 
     value_regex: re.Pattern = re.compile(rf'(?P<path>{abempty}|{absolute}|{noscheme}|{rootless}|{empty})')
     validation_error = InvalidPathError

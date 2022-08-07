@@ -16,3 +16,8 @@ from url_simple.components import (
     Fragment,
 )
 
+
+def test_uri_component_init():
+    uri_component = URIComponent(value='http://example.com')
+    assert uri_component.value == 'http://example.com'
+

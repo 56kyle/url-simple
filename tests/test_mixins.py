@@ -37,19 +37,20 @@ def test_string_value_dependent_ne_with_diff_str_value():
 
 def test_value_validatable_validate_through_dummy():
     class Dummy(ValueValidatable):
-        def _validate(self):
-            super()._validate()
+        @classmethod
+        def validate(cls):
+            ValueValidatable.validate()
     dummy = Dummy(42)
-    assert dummy._validate() is None
+    assert dummy.validate() is None
 
 def test_value_string_validatable_validate_with_valid_value():
     class DummyValueStringValidatable(ValueStringValidatable):
-        validation_regex = re.compile('^foo$')
+        value_regex = re.compile('^foo$')
 
-    with pytest.raises(ValidationError):
-        ValueStringValidatable('foo')._validate()
+    DummyValueStringValidatable.validate('foo')
 
 def test_value_string_validatable_validate_with_invalid_value():
     with pytest.raises(ValidationError):
-        ValueStringValidatable('foo')._validate()
+        ValueStringValidatable.validate('foo')
+
 
