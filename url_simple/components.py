@@ -16,6 +16,7 @@ from url_simple.constants import (
 )
 from url_simple.exceptions import (
     ValidationError,
+    InvalidURIError,
     InvalidSchemeError,
     InvalidAuthorityError,
     InvalidUserInfoError,
@@ -31,11 +32,11 @@ from url_simple.exceptions import (
     InvalidFragmentError,
 )
 from url_simple.mixins import (
-    ValueStringValidatable,
+    StringValidatable,
 )
 
 
-class URIComponent(ValueStringValidatable):
+class URIComponent(StringValidatable):
     prefix: str = ''
     suffix: str = ''
 
@@ -45,12 +46,12 @@ class URIComponent(ValueStringValidatable):
 
     @classmethod
     def as_pattern(cls) -> str:
-        return f'{cls.prefix}{cls.value_regex.pattern}{cls.suffix}'
+        return rf'{cls.prefix}{cls.value_regex.pattern}{cls.suffix}'
 
     def parse(self):
-        match: re.Match | None = self._get_fullmatch(self.value)
-        self._get_components(match)
+        match: re.Match = self._get_fullmatch(self.value)
         self._validate_against_match(self.value, match)
+        self._get_components(match)
 
     def _get_components(self, match: re.Match):
         pass
@@ -68,35 +69,12 @@ class UserInfo(URIComponent):
     validation_error = InvalidUserInfoError
 
 
-class Hostname(URIComponent):
-    label_regex: re.Pattern = re.compile(r'[a-zA-Z\d-]{1,63}')
-    label_with_joining_dot_regex: re.Pattern = re.compile(rf'\.{label_regex.pattern}')
-    value_regex: re.Pattern = re.compile(
-        rf'(?P<hostname>{label_regex.pattern}(?:{label_with_joining_dot_regex.pattern}){{0,3}})'
-    )
-    validation_error = InvalidHostnameError
-
-
-class IPV4(URIComponent):
-    value_regex: re.Pattern = re.compile(r'(?P<ipv4>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')
-    validation_error = InvalidIPV4Error
-
-
-class IPV6(URIComponent):
-    prefix: str = '['
-    suffix: str = ']'
-    value_regex: re.Pattern = re.compile(rf'(?P<ipv6>{hex_digit.pattern}{{1,4}}(?::{hex_digit.pattern}{{1,4}}){7})')
-    validation_error = InvalidIPV6Error
-
-
 class Host(URIComponent):
-    value_regex: re.Pattern = re.compile(rf'(?P<host>{Hostname.as_pattern()}|{IPV4.as_pattern()}|{IPV6.as_pattern()}')
+    hostname = re.compile(rf'({unreserved}|{pct_encoded}|{sub_delims}){1,254}')
+    ipv4 = re.compile(r'(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')#, re.DEBUG)
+    ipv6 = re.compile(r'(?:[0-9a-fA-F]{1,4}(?::[0-9a-fA-F]{1,4}){7})')
+    value_regex: re.Pattern = re.compile(rf'(?P<host>{hostname}|{ipv4}|{ipv6})')
     validation_error = InvalidHostError
-
-    def _get_components(self, match: re.Match):
-        self.hostname: Hostname | None = Hostname(value=match.group('hostname'))
-        self.ipv4: IPV4 | None = IPV4(value=match.group('ipv4'))
-        self.ipv6: IPV6 | None = IPV6(value=match.group('ipv6'))
 
 
 class Port(URIComponent):
@@ -107,7 +85,7 @@ class Port(URIComponent):
 
 class Authority(URIComponent):
     prefix: str = '//'
-    value_regex = re.compile(rf'(?P<authority>{UserInfo.as_pattern()}?{Host.as_pattern()}{Port.as_pattern()}?)')
+    value_regex = re.compile(rf'(?P<authority>(?:{UserInfo.as_pattern()})?(?:{Host.as_pattern()})(?:{Port.as_pattern()})?)')
     validation_error = InvalidAuthorityError
 
     def _get_components(self, match: re.Match):
@@ -117,22 +95,7 @@ class Authority(URIComponent):
 
 
 class Path(URIComponent):
-    pchar: re.Pattern = re.compile(rf'{unreserved}|{pct_encoded}|{sub_delims}|[:@]')
-    segment: re.Pattern = re.compile(rf'{pchar}*')
-    segment_nz: re.Pattern = re.compile(rf'{pchar}+')
-    segment_nz_nc: re.Pattern = re.compile(rf'(?:{unreserved}|{pct_encoded}|{sub_delims}|@)+')
-    pchar = re.compile(r'.*')
-    segment = re.compile(r'.*')
-    segment_nz = re.compile(r'.*')
-    segment_nz_nc = re.compile(r'.*')
-
-    abempty: re.Pattern = re.compile(rf'(?P<abempty>(/{segment})*)')
-    absolute: re.Pattern = re.compile(rf'(?P<absolute>/(?:{segment_nz}(?:/{segment})*)?)')
-    noscheme: re.Pattern = re.compile(rf'(?P<noscheme>{segment_nz_nc}(?:/{segment})*)')
-    rootless: re.Pattern = re.compile(rf'(?P<rootless>{segment_nz}(?:/{segment})*)')
-    empty: re.Pattern = re.compile(r'(?P<empty>^$)')
-
-    value_regex: re.Pattern = re.compile(rf'(?P<path>{abempty}|{absolute}|{noscheme}|{rootless}|{empty})')
+    value_regex: re.Pattern = re.compile(rf'[^?#]*')
     validation_error = InvalidPathError
 
 
@@ -145,3 +108,6 @@ class Fragment(URIComponent):
     value_regex: re.Pattern = re.compile(r'^(?P<fragment>.)')
     validation_error = InvalidFragmentError
 
+
+if __name__ == '__main__':
+    print(Host.value_regex.pattern)

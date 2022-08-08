@@ -26,7 +26,7 @@ pct_encoded: re.Pattern = re.compile(rf'%{hex_digit.pattern}{{2}}')
 
 gen_delims: re.Pattern = re.compile(r'[:/?#\[\]@]')
 sub_delims: re.Pattern = re.compile(r'[!$&\'()*+,;=]')
-reserved: re.Pattern = re.compile(rf'{gen_delims}|{sub_delims}')
+reserved: re.Pattern = re.compile(r'[:/?#\[\]@!$&\'()*+,;=]')
 unreserved: re.Pattern = re.compile(rf'[a-zA-Z0-9-._~]')
 
 pchar: re.Pattern = re.compile(rf'{unreserved}|{pct_encoded}|{sub_delims}|[:@]')

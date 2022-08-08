@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8930a39b-6f30-4263-9d92-abaec795b81c" name="Changes" comment="adds more regex to components">
+    <list default="true" id="8930a39b-6f30-4263-9d92-abaec795b81c" name="Changes" comment="Adds path regex">
+      <change beforePath="$PROJECT_DIR$/.coverage" beforeDir="false" afterPath="$PROJECT_DIR$/.coverage" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_components.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_components.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_mixins.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_mixins.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/url_simple/components.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/components.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/url_simple/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/url_simple/mixins.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/mixins.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,27 +39,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/56kyl/source/repos/url-simple&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Project.color": "474250",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/56kyl/source/repos/url-simple",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\56kyl\source\repos\url-simple" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Python tests for test_constants.test_octet_with_value_over_max">
-    <configuration name="constants" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.components">
+    <configuration name="components" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="url-simple" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -70,7 +73,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/url_simple/constants.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/url_simple/components.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -79,7 +82,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_components.test_uri_component_init" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_constants.test_regex_ideas" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="url-simple" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -90,11 +93,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_components.test_uri_component_init&quot;" />
+      <option name="_new_target" value="&quot;test_constants.test_regex_ideas&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_constants.test_octet_with_value_over_max" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in test_components.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="url-simple" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -105,11 +108,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_constants.test_octet_with_value_over_max&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_components.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for test_mixins.test_value_string_validatable_validate" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in test_constants.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="url-simple" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -120,11 +123,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_mixins.test_value_string_validatable_validate&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_constants.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in test_mixins.py" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests in tests" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="url-simple" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -135,17 +138,17 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/test_mixins.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Python tests for test_constants.test_octet_with_value_over_max" />
-        <item itemvalue="Python tests.Python tests for test_components.test_uri_component_init" />
-        <item itemvalue="Python.constants" />
-        <item itemvalue="Python tests.Python tests for test_mixins.test_value_string_validatable_validate" />
-        <item itemvalue="Python tests.Python tests in test_mixins.py" />
+        <item itemvalue="Python.components" />
+        <item itemvalue="Python tests.Python tests in test_constants.py" />
+        <item itemvalue="Python tests.Python tests for test_constants.test_regex_ideas" />
+        <item itemvalue="Python tests.Python tests in test_components.py" />
+        <item itemvalue="Python tests.Python tests in tests" />
       </list>
     </recent_temporary>
   </component>
@@ -165,6 +168,7 @@
       <workItem from="1659668801980" duration="3377000" />
       <workItem from="1659757792525" duration="6827000" />
       <workItem from="1659854280255" duration="911000" />
+      <workItem from="1659936020923" duration="3760000" />
     </task>
     <task id="LOCAL-00001" summary="Moved all to new repository for naming purposes">
       <created>1659077198266</created>
@@ -226,7 +230,8 @@
     <option name="LAST_COMMIT_MESSAGE" value="Adds test files" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/url_simple$constants.coverage" NAME="constants Coverage Results" MODIFIED="1659823404978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/url_simple" />
-    <SUITE FILE_PATH="coverage/url_simple$.coverage" NAME=" Coverage Results" MODIFIED="1659822000576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/url_simple$.coverage" NAME=" Coverage Results" MODIFIED="1659936999476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/url_simple$constants.coverage" NAME="constants Coverage Results" MODIFIED="1659646653251" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/url_simple" />
+    <SUITE FILE_PATH="coverage/url_simple$components.coverage" NAME="components Coverage Results" MODIFIED="1659937449462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/url_simple" />
   </component>
 </project>

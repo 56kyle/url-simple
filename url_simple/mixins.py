@@ -15,7 +15,7 @@ class ValueDependent(Generic[T]):
         self.value: T = value
 
 
-class ValueStringDependent(ValueDependent[str]):
+class StringDependent(ValueDependent[str]):
     def __init__(self, value: str):
         super().__init__(value=value)
 
@@ -35,7 +35,7 @@ class ValueValidatable(ABC, ValueDependent):
         pass
 
 
-class ValueStringValidatable(ValueValidatable, ValueStringDependent):
+class StringValidatable(ValueValidatable, StringDependent):
     value_regex: re.Pattern = re.compile(r'')
     validation_error = exceptions.ValidationError
 

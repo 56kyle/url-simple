@@ -5,9 +5,6 @@ from url_simple.components import (
     URIComponent,
     Scheme,
     UserInfo,
-    Hostname,
-    IPV4,
-    IPV6,
     Host,
     Port,
     Authority,
@@ -18,6 +15,7 @@ from url_simple.components import (
 
 
 def test_uri_component_init():
-    uri_component = URIComponent(value='http://example.com')
-    assert uri_component.value == 'http://example.com'
+    uri_component = URIComponent('')
+    assert uri_component.value == ''
+
 
