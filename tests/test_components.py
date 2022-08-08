@@ -19,3 +19,7 @@ def test_uri_component_init():
     assert uri_component.value == ''
 
 
+def test_scheme_init():
+    scheme = Scheme('http')
+    assert scheme.value == 'http'
+

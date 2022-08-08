@@ -186,5 +186,3 @@ def test_wsp_with_horizontal_tab():
 def test_wsp_with_non_space():
     assert WSP.fullmatch('a') is None
 
-
-

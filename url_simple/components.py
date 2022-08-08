@@ -2,7 +2,7 @@
 import re
 
 from dataclasses import dataclass, field
-from typing import List, AnyStr
+from typing import Dict, List
 
 from url_simple.constants import (
     hex_digit,
@@ -45,27 +45,22 @@ class URIComponent(StringValidatable):
         self.parse()
 
     @classmethod
-    def as_pattern(cls) -> str:
-        return rf'{cls.prefix}{cls.value_regex.pattern}{cls.suffix}'
+    def parse(cls, value: str):
+        cls.validate(value)
+        cls._get_components()
 
-    def parse(self):
-        match: re.Match = self._get_fullmatch(self.value)
-        self._validate_against_match(self.value, match)
-        self._get_components(match)
-
-    def _get_components(self, match: re.Match):
+    def _get_components(self, value: str):
         pass
 
 
 class Scheme(URIComponent):
     suffix: str = ':'
-    value_regex: re.Pattern = re.compile(r'(?P<scheme>[a-zA-Z][a-zA-Z\d+.-]+)')
+    regex: re.Pattern = re.compile(r'(?P<scheme>[a-zA-Z][a-zA-Z\d+.-]+)')
     validation_error = InvalidSchemeError
 
 
 class UserInfo(URIComponent):
-    suffix: str = '@'
-    value_regex: re.Pattern = re.compile(rf'(?P<user_info>(?:{unreserved}|{pct_encoded}|{sub_delims}|:)*)')
+    regex: re.Pattern = re.compile(rf'(?P<user_info>(?:{unreserved}|{pct_encoded}|{sub_delims}|:)*)')
     validation_error = InvalidUserInfoError
 
 
@@ -73,39 +68,46 @@ class Host(URIComponent):
     hostname = re.compile(rf'({unreserved}|{pct_encoded}|{sub_delims}){1,254}')
     ipv4 = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')#, re.DEBUG)
     ipv6 = re.compile(r'[0-9a-fA-F]{1,4}(?::[0-9a-fA-F]{1,4}){7}')
-    value_regex: re.Pattern = re.compile(rf'(?P<host>{hostname}|{ipv4}|{ipv6})')
+    regex: re.Pattern = re.compile(rf'(?P<host>{hostname}|{ipv4}|{ipv6})')
     validation_error = InvalidHostError
 
 
 class Port(URIComponent):
     prefix: str = ':'
-    value_regex: re.Pattern = re.compile(r'(?P<port>\d{1,5})')
+    regex: re.Pattern = re.compile(r'(?P<port>\d{1,5})')
     validation_error = InvalidPortError
 
 
 class Authority(URIComponent):
     prefix: str = '//'
-    value_regex = re.compile(rf'(?P<authority>(?:{UserInfo.as_pattern()})?(?:{Host.as_pattern()})(?:{Port.as_pattern()})?)')
+    regex = re.compile(rf'(?P<authority>(?:{UserInfo.regex.pattern}@)?{Host.regex.pattern}(?::{Port.regex.pattern})?)')
     validation_error = InvalidAuthorityError
 
-    def _get_components(self, match: re.Match):
-        self.user_info: UserInfo | None = UserInfo(value=match.group('user_info'))
-        self.host: Host | None = Host(value=match.group('host'))
-        self.port: Port | None = Port(value=match.group('port'))
+    @classmethod
+    def _get_components(cls, value: str) -> Dict[str, StringValidatable]:
+        match = cls.regex.fullmatch(value)
+        user_info: UserInfo | None = UserInfo(value=match.group('user_info')) if match.group('user_info') else None
+        host: Host | None = Host(value=match.group('host')) if match.group('host') else None
+        port: Port | None = Port(value=match.group('port')) if match.group('port') else None
+        return {
+            'user_info': user_info,
+            'host': host,
+            'port': port,
+        }
 
 
 class Path(URIComponent):
-    value_regex: re.Pattern = re.compile(rf'[^?#]*')
+    regex: re.Pattern = re.compile(rf'[^?#]*')
     validation_error = InvalidPathError
 
 
 class Query(URIComponent):
-    value_regex: re.Pattern = re.compile(r'^(?P<query>.)')
+    regex: re.Pattern = re.compile(r'^(?P<query>.)')
     validation_error = InvalidQueryError
 
 
 class Fragment(URIComponent):
-    value_regex: re.Pattern = re.compile(r'^(?P<fragment>.)')
+    regex: re.Pattern = re.compile(r'^(?P<fragment>.)')
     validation_error = InvalidFragmentError
 
 

@@ -16,6 +16,8 @@ class ValueDependent(Generic[T]):
 
 
 class StringDependent(ValueDependent[str]):
+    regex: re.Pattern = re.compile(r'')
+
     def __init__(self, value: str):
         super().__init__(value=value)
 
@@ -36,20 +38,17 @@ class ValueValidatable(ABC, ValueDependent):
 
 
 class StringValidatable(ValueValidatable, StringDependent):
-    value_regex: re.Pattern = re.compile(r'')
     validation_error = exceptions.ValidationError
 
     @classmethod
     def validate(cls, value: str) -> None:
-        match = cls._get_fullmatch(value)
-        cls._validate_against_match(value, match)
-
-    @classmethod
-    def _validate_against_match(cls, value: str, match: re.Match | None):
-        if match is None:
+        if cls._get_fullmatch(value) is None:
             raise cls.validation_error(f'Invalid value for {cls.__name__}: {value}')
 
     @classmethod
     def _get_fullmatch(cls, value: str) -> re.Match | None:
-        return cls.value_regex.fullmatch(value)
+        return cls.regex.fullmatch(value)
+
+
+
 

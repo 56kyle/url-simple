@@ -45,7 +45,7 @@ def test_value_validatable_validate_through_dummy():
 
 def test_value_string_validatable_validate_with_valid_value():
     class DummyStringValidatable(StringValidatable):
-        value_regex = re.compile('^foo$')
+        regex = re.compile('^foo$')
 
     DummyStringValidatable.validate('foo')
 

@@ -9,7 +9,7 @@ from typing import List, NamedTuple
 
 
 class URI(components.URIComponent):
-    value_regex: re.Pattern = re.compile(rf'{components.Scheme.as_pattern()}')
+    regex: re.Pattern = re.compile(rf'^((?P<scheme>[^:/?#]+):)?(//([^/?#]*))?([^?#]*)(?P<query>\?([^#]*))?(?P<fragment>#(.*))?', re.DEBUG)
     validation_error = exceptions.InvalidURIError
 
     def _get_components(self, match: re.Match):
@@ -24,5 +24,4 @@ class URI(components.URIComponent):
         self.path = components.Path(path_match) if path_match else None
         self.query = components.Query(query_match) if query_match else None
         self.fragment = components.Fragment(fragment_match) if fragment_match else None
-
 
