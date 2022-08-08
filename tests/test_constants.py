@@ -187,21 +187,4 @@ def test_wsp_with_non_space():
     assert WSP.fullmatch('a') is None
 
 
-x1 = re.compile(rf'a')
-x2 = re.compile(rf'{x1}*')
-x3 = re.compile(rf'{x1}+')
-
-
-def test_x2():
-    assert x2.fullmatch('')
-    assert x2.fullmatch('a')
-
-
-def test_x3():
-    assert x3.fullmatch('') is None
-    assert x3.fullmatch('a')
-    assert x3.fullmatch('aa')
-
-
-
 

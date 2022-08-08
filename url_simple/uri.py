@@ -13,9 +13,16 @@ class URI(components.URIComponent):
     validation_error = exceptions.InvalidURIError
 
     def _get_components(self, match: re.Match):
-        self.scheme = components.Scheme(match.group('scheme'))
-        self.authority = components.Authority(match.group('authority'))
-        self.path = components.Path(match.group('path'))
-        self.query = components.Query(match.group('query'))
-        self.fragment = components.Fragment(match.group('fragment'))
+        scheme_match = match.group('scheme')
+        authority_match = match.group('authority')
+        path_match = match.group('path')
+        query_match = match.group('query')
+        fragment_match = match.group('fragment')
+
+        self.scheme = components.Scheme(scheme_match) if scheme_match else None
+        self.authority = components.Authority(authority_match) if authority_match else None
+        self.path = components.Path(path_match) if path_match else None
+        self.query = components.Query(query_match) if query_match else None
+        self.fragment = components.Fragment(fragment_match) if fragment_match else None
+
 

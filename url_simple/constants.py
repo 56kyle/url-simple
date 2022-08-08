@@ -18,7 +18,7 @@ OCTET: re.Pattern = re.compile(r'[\x00-\xFF]')
 SP: re.Pattern = re.compile(r'\x20')
 VCHAR: re.Pattern = re.compile(r'[\u0021-\u007E]')
 WSP: re.Pattern = re.compile(rf'[{SP.pattern}{HTAB.pattern}]')
-LWSP: re.Pattern = re.compile(rf'(?:(?:{CRLF.pattern})?{WSP.pattern})*')
+LWSP: re.Pattern = re.compile(rf'(?:(?:(?:{CRLF.pattern})?{WSP.pattern})*)')
 
 
 hex_digit: re.Pattern = re.compile(r'[0-9a-fA-F]')
@@ -30,12 +30,8 @@ reserved: re.Pattern = re.compile(r'[:/?#\[\]@!$&\'()*+,;=]')
 unreserved: re.Pattern = re.compile(rf'[a-zA-Z0-9-._~]')
 
 pchar: re.Pattern = re.compile(rf'{unreserved}|{pct_encoded}|{sub_delims}|[:@]')
-reg_name: re.Pattern = re.compile(rf'({unreserved}|{pct_encoded}|{sub_delims})*')
+reg_name: re.Pattern = re.compile(rf'(?:({unreserved}|{pct_encoded}|{sub_delims})*)')
 
 ipv4_address: re.Pattern = re.compile(r'(?P<ipv4>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')
-
-
-if __name__ == '__main__':
-    print('\u00A1')
 
 

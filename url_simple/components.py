@@ -71,8 +71,8 @@ class UserInfo(URIComponent):
 
 class Host(URIComponent):
     hostname = re.compile(rf'({unreserved}|{pct_encoded}|{sub_delims}){1,254}')
-    ipv4 = re.compile(r'(?:\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')#, re.DEBUG)
-    ipv6 = re.compile(r'(?:[0-9a-fA-F]{1,4}(?::[0-9a-fA-F]{1,4}){7})')
+    ipv4 = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')#, re.DEBUG)
+    ipv6 = re.compile(r'[0-9a-fA-F]{1,4}(?::[0-9a-fA-F]{1,4}){7}')
     value_regex: re.Pattern = re.compile(rf'(?P<host>{hostname}|{ipv4}|{ipv6})')
     validation_error = InvalidHostError
 

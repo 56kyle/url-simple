@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8930a39b-6f30-4263-9d92-abaec795b81c" name="Changes" comment="Adds path regex">
+    <list default="true" id="8930a39b-6f30-4263-9d92-abaec795b81c" name="Changes" comment="continues to fix up regex and try to remove nested regex definitions that keep on breaking. refactors value prefixed mixins">
       <change beforePath="$PROJECT_DIR$/.coverage" beforeDir="false" afterPath="$PROJECT_DIR$/.coverage" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_components.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_components.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/test_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_uri.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_uri.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/url_simple/components.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/components.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/url_simple/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/url_simple/mixins.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/mixins.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/url_simple/uri.py" beforeDir="false" afterPath="$PROJECT_DIR$/url_simple/uri.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +168,7 @@
       <workItem from="1659668801980" duration="3377000" />
       <workItem from="1659757792525" duration="6827000" />
       <workItem from="1659854280255" duration="911000" />
-      <workItem from="1659936020923" duration="3760000" />
+      <workItem from="1659936020923" duration="6646000" />
     </task>
     <task id="LOCAL-00001" summary="Moved all to new repository for naming purposes">
       <created>1659077198266</created>
@@ -205,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659609800625</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="continues to fix up regex and try to remove nested regex definitions that keep on breaking. refactors value prefixed mixins">
+      <created>1659944811435</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1659944811435</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,7 +234,8 @@
     <MESSAGE value="Moved all to new repository for naming purposes" />
     <MESSAGE value="Removes all so I can start with proper tdd" />
     <MESSAGE value="Adds test files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds test files" />
+    <MESSAGE value="continues to fix up regex and try to remove nested regex definitions that keep on breaking. refactors value prefixed mixins" />
+    <option name="LAST_COMMIT_MESSAGE" value="continues to fix up regex and try to remove nested regex definitions that keep on breaking. refactors value prefixed mixins" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/url_simple$.coverage" NAME=" Coverage Results" MODIFIED="1659936999476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
