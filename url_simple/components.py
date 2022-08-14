@@ -20,12 +20,7 @@ from url_simple.exceptions import (
     InvalidSchemeError,
     InvalidAuthorityError,
     InvalidUserInfoError,
-    InvalidUsernameError,
-    InvalidPasswordError,
     InvalidHostError,
-    InvalidHostnameError,
-    InvalidIPV4Error,
-    InvalidIPV6Error,
     InvalidPortError,
     InvalidPathError,
     InvalidQueryError,
@@ -42,14 +37,15 @@ class URIComponent(StringValidatable):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.parse()
+        self.parse(self.value)
 
     @classmethod
     def parse(cls, value: str):
         cls.validate(value)
-        cls._get_components()
+        cls._get_components(value)
 
-    def _get_components(self, value: str):
+    @classmethod
+    def _get_components(cls, value: str) -> Dict[str, StringValidatable]:
         pass
 
 
